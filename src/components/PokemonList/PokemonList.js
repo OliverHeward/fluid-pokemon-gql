@@ -1,34 +1,120 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchPokemon,
-  getFilters,
-  pokemonSelector,
-} from "../../app/pokemonSlice";
+import { getFilters } from "../../app/pokemonSlice";
 import PokeCard from "../PokeCard/PokeCard";
+import Rems from "../../styles/mixins/Rems";
 
-const PokemonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  grid-gap: 12px;
-  padding: 0 0 120px 0;
-  &:nth-of-type(odd) {
-    background: var(--red);
+import Pokedex from "../../assets/svgs/pokedex.svg";
+import Pokeball from "../../assets/svgs/Pokeball.svg";
+
+const PokemonListStyled = styled.div`
+  position: relative;
+
+  .button-container {
+    position: absolute;
+    bottom: calc(var(--spacing) * 3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    button {
+      background: var(--black);
+      cursor: pointer;
+      color: white;
+      border-radius: 20px;
+      border: none;
+      text-transform: uppercase;
+      font-weight: 700;
+      width: 90%;
+      max-width: 350px;
+      ${Rems({ type: "font-size", size: 18 })};
+      padding: calc(var(--spacing) / 2) calc(var(--spacing) * 2);
+
+      &.hide {
+        display: none;
+      }
+    }
   }
-  &:nth-of-type(even) {
-    background: var(--blue);
+
+  @media screen and (min-width: 768px) {
+    .button-container button {
+      width: unset;
+    }
   }
 `;
 
-const PokemonList = () => {
-  const dispatch = useDispatch();
-  const { pokemon, loading, hasErrors } = useSelector(pokemonSelector);
-  const { payload } = useSelector(getFilters);
+const PokemonWrapper = styled.div`
+  padding: 40px 5% 120px;
+  position: relative;
+  &:nth-of-type(odd) {
+    background: var(--blue);
+    .pokedex path {
+      stroke: var(--red) !important;
+    }
+    .pokeball {
+      &:first-of-type {
+        bottom: 25px;
+        left: -75px;
+        transform: scaleX(-1);
+      }
+      &:last-of-type {
+        bottom: 205px;
+        right: -80px;
+      }
+    }
+  }
 
-  useEffect(() => {
-    dispatch(fetchPokemon());
-  }, [dispatch]);
+  &:nth-of-type(even) {
+    background: var(--red);
+    .pokedex path {
+      stroke: var(--blue) !important;
+    }
+    .pokeball {
+      &:first-of-type {
+        bottom: 25px;
+        left: -75px;
+        transform: scaleX(-1);
+      }
+      &:last-of-type {
+        top: -90px;
+        right: 20%;
+      }
+    }
+  }
+
+  .pokeball {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .pokedex {
+    position: absolute;
+    top: -94px;
+    max-width: 900px;
+    width: 100%;
+    left: 0;
+
+    path {
+      stroke-width: 2px;
+    }
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 12px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+`;
+
+const PokemonList = ({ allPokemon }) => {
+  const dispatch = useDispatch();
+  const { payload } = useSelector(getFilters);
+  const [number, setNumber] = useState(6);
 
   const chunkArray = (array, chunk_size) => {
     var index = 0;
@@ -44,21 +130,16 @@ const PokemonList = () => {
   };
 
   const renderPokemon = () => {
-    if (loading) return <p>Loading pokemon...</p>;
-    if (hasErrors) return <p>Cannot display pokemon...</p>;
-
     let filtered, arrayChunks;
-
-    const resolvedNests = pokemon.map((node) => {
-      const { id, name, types, abilities, stats, sprites } = node;
-
+    const resolvedNests = allPokemon.nodes.map((node) => {
+      const { id, name, types, abilities, stats, image } = node;
       return {
         id,
         name,
         types: types.map((type) => type.type.name),
         stats,
         abilities: abilities.map((ability) => ability.ability.name),
-        image: sprites.other,
+        image,
       };
     });
 
@@ -67,11 +148,7 @@ const PokemonList = () => {
       I needed to loop over the filters, then filter the results
       this caused [Array, Array, ...] for filters as they are passed in
       so a new Set of unique objects is formed from the array once flattened
-      this prevents duplicates of pokemon that are both for example, flying + fire (like charizard)
-      
-      Probably massively over enginereed, but wanted to allow for the API to be stateful,
-      including the filters being stateful too. But ultimately, without mutating the state
-    */
+      this prevents duplicates of pokemon that are both for example, flying + fire (like charizard) */
     if (payload.pokemon.filters) {
       filtered = [
         ...new Set(
@@ -85,23 +162,47 @@ const PokemonList = () => {
         ),
       ];
     }
-
+    // take the number from state - which is update from the button
+    //  slice the array with this state
+    // Show that no pokemon fit filter if none return
     arrayChunks = filtered.length
-      ? chunkArray(filtered, 3)
-      : chunkArray(resolvedNests, 3);
+      ? chunkArray(filtered.slice(0, number), 3)
+      : chunkArray(resolvedNests.slice(0, number), 3);
 
     return arrayChunks.map((chunk) => {
       return (
         <PokemonWrapper>
-          {chunk.map((pokemon) => (
-            <PokeCard {...pokemon} />
-          ))}
+          <Pokedex className="pokedex" />
+          <div className="container">
+            <Pokeball className="pokeball" />
+            {chunk.map((pokemon) => (
+              <PokeCard {...pokemon} />
+            ))}
+            <Pokeball className="pokeball" />
+          </div>
         </PokemonWrapper>
       );
     });
   };
 
-  return <div>{renderPokemon()}</div>;
+  const fetchMorePokemon = () => {
+    setNumber(number + 6);
+  };
+
+  return (
+    <PokemonListStyled>
+      {renderPokemon()}
+      <div className="button-container">
+        <button
+          className={`btn cta`}
+          role="button"
+          onClick={() => fetchMorePokemon()}
+        >
+          Load More
+        </button>
+      </div>
+    </PokemonListStyled>
+  );
 };
 
 export default PokemonList;

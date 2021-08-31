@@ -23,6 +23,13 @@ export default function usePokemon() {
               name
             }
           }
+          image {
+            url {
+              childImageSharp {
+                gatsbyImageData(width: 200)
+              }
+            }
+          }
           sprites {
             other {
               official_artwork {

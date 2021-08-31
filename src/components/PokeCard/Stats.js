@@ -2,9 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const StatsStyled = styled.li`
-  margin: 12px 0;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: 32% 60% auto;
+  align-items: center;
+  grid-gap: 8px;
+  border-bottom: 1px dashed var(--grey);
   .range {
     position: relative;
+    overflow: hidden;
   }
   .stat-type {
     text-transform: capitalize;
@@ -52,7 +58,7 @@ const Stats = ({ base_stat, stat }) => {
           style={{ width: base_stat + "%" }}
         ></span>
       </div>
-      <span className="stat-number">{base_stat}</span>
+      <span className="stat-number bold">{base_stat}</span>
     </StatsStyled>
   );
 };

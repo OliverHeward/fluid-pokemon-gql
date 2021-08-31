@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import Rems from './mixins/Rems';
+import Rems from "./mixins/Rems";
 
 const Typography = createGlobalStyle`
     * {
@@ -7,22 +7,22 @@ const Typography = createGlobalStyle`
     }
 
     h1 {
-        ${Rems({type: 'font-size', size: 90})};
+        ${Rems({ type: "font-size", size: 56 })};
         font-weight: 500;
     }
 
     h2 {
-        ${Rems({type: 'font-size', size: 45})};
+        ${Rems({ type: "font-size", size: 36 })};
         font-weight: 700;
     }
 
     h3 {
-        ${Rems({type: 'font-size', size: 24})};
+        ${Rems({ type: "font-size", size: 24 })};
         font-weight: 300;
     }
 
     h4 {
-        ${Rems({type: 'font-size', size: 20})};
+        ${Rems({ type: "font-size", size: 20 })};
         font-weight: 300;
     }
 
@@ -38,6 +38,28 @@ const Typography = createGlobalStyle`
         font-weight: 500;
     }
 
-`
 
-export default Typography
+    .capitilize {
+        text-transform: capitalize;
+      }
+
+    @media screen and (min-width: 768px) {
+        h1 {
+            ${Rems({ type: "font-size", size: 72 })};
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        h1 {
+            ${Rems({ type: "font-size", size: 90 })};
+            font-weight: 500;
+        }
+    
+        h2 {
+            ${Rems({ type: "font-size", size: 45 })};
+            font-weight: 700;
+        }
+    }
+`;
+
+export default Typography;

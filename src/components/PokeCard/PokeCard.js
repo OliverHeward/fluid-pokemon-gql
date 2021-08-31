@@ -1,4 +1,5 @@
 import { Link } from "gatsby";
+import { getImage, GatsbyImage } from "gatsby-plugin-image";
 import React from "react";
 import styled from "styled-components";
 import Rems from "../../styles/mixins/Rems";
@@ -9,9 +10,16 @@ const PokeCardStyled = styled.div`
     color: #000;
     text-decoration: none;
   }
-  max-width: 350px;
+  max-width: 380px;
   margin: 150px auto 0;
   width: 100%;
+  z-index: 10;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+
   .pokemon-header {
     background: var(--light-green);
     height: 150px;
@@ -21,10 +29,10 @@ const PokeCardStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    img {
+
+    .gatsby-image-wrapper {
       position: absolute;
       bottom: 0;
-      max-height: 270px;
     }
   }
 
@@ -33,54 +41,64 @@ const PokeCardStyled = styled.div`
     background: #fff;
     border-radius: 0 0 var(--spacing) var(--spacing);
 
+    h3,
     h2 {
       margin: 0;
     }
-  }
 
-  .capitilize {
-    text-transform: capitalize;
+    h2 {
+      margin-bottom: var(--spacing);
+    }
+
+    .info-main {
+      display: grid;
+      grid-template-columns: 32% 70%;
+      grid-gap: 8px;
+      align-items: stretch;
+      margin-bottom: var(--spacing);
+    }
+
+    .looped {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      grid-gap: 3px;
+    }
   }
 
   span {
-    ${Rems({ type: "font-size", size: 12 })};
-  }
-
-  .stats {
-    ul {
-    }
-
-    li {
-      display: grid;
-      grid-template-columns: 32% 60% auto;
-      align-items: center;
-      grid-gap: 8px;
-    }
+    ${Rems({ type: "font-size", size: 13 })};
   }
 `;
 
 const PokeCard = (props) => {
+  const image = getImage(props.image.url);
+
   return (
     <PokeCardStyled>
-      <Link to={`pokemon/${props.name}`}>
-        {/* <div className="pokemon-header">
-          <img src={props.image} />
-  </div> */}
+      <Link to={`${props.name}`}>
+        <div className="pokemon-header">
+          <GatsbyImage image={image} alt={`picture of ${props.name}`} />
+        </div>
         <div className="pokemon-body">
-          <h2>{props.name}</h2>
+          <h2 className="capitilize">{props.name}</h2>
           <div className="info">
-            <h3>
-              Type{" "}
-              {props.types.map((type) => (
-                <span className="capitilize">{type} | </span>
-              ))}
-            </h3>
-            <h3>
-              Abilities{" "}
-              {props.abilities.map((ability) => (
-                <span className="capitilize">{ability} | </span>
-              ))}
-            </h3>
+            <div className="info-main">
+              <h3 className="bold">Type </h3>
+              <div className="looped">
+                {props.types.map((type) => (
+                  <span className="capitilize">{type} | </span>
+                ))}
+              </div>
+            </div>
+            <div className="info-main">
+              <h3 className="bold">Abilities </h3>
+              <div className="looped">
+                {props.abilities.map((ability) => (
+                  <span className="capitilize">{ability} | </span>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="stats">

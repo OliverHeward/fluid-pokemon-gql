@@ -4,13 +4,12 @@ import Typography from "../../styles/Typography"
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-
 const Layout = ({children}) => {
     return (
         <div>
+            <Header />
             <GlobalStyles />
             <Typography />
-            <Header />
             {children}
             <Footer />
         </div>

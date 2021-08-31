@@ -7,6 +7,13 @@ module.exports = {
     "gatsby-plugin-styled-components",
     "gatsby-plugin-react-helmet",
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pokemon-images`,
+        path: `${__dirname}/src/assets/pokemon/`,
+      },
+    },
+    {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "src/images/icon.png",
@@ -17,6 +24,7 @@ module.exports = {
       options: {
         defaults: {
           formats: [`auto`, `webp`],
+          placeholder: "blurred",
         },
       },
     },
