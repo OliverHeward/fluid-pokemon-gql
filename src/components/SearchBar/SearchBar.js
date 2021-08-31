@@ -97,7 +97,7 @@ const SearchBar = () => {
       <div className={`list ${searchTerm ? "show" : "hide"}`}>
         {returnPokemon ? (
           returnPokemon.map((poke) => {
-            return <PokeItem name={poke.node.name} image={poke.node.image} />;
+            return <PokeItem key={poke.node.name} name={poke.node.name} image={poke.node.image} />;
           })
         ) : (
           <p>oops</p>

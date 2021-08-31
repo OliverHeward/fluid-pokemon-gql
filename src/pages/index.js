@@ -1,7 +1,6 @@
 import { graphql } from "gatsby";
 import React from "react";
 import Filter from "../components/Filter/Filter";
-import Header from "../components/Header/Header";
 import PokemonList from "../components/PokemonList/PokemonList";
 
 const IndexPage = ({ data }) => {

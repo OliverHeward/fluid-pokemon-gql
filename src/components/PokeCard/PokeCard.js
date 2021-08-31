@@ -87,7 +87,7 @@ const PokeCard = (props) => {
               <h3 className="bold">Type </h3>
               <div className="looped">
                 {props.types.map((type) => (
-                  <span className="capitilize">{type} | </span>
+                  <span key={type} className="capitilize">{type} | </span>
                 ))}
               </div>
             </div>
@@ -95,7 +95,7 @@ const PokeCard = (props) => {
               <h3 className="bold">Abilities </h3>
               <div className="looped">
                 {props.abilities.map((ability) => (
-                  <span className="capitilize">{ability} | </span>
+                  <span key={ability} className="capitilize">{ability} | </span>
                 ))}
               </div>
             </div>
@@ -104,7 +104,7 @@ const PokeCard = (props) => {
           <div className="stats">
             <ul>
               {props.stats.map((stat) => (
-                <Stats {...stat} />
+                <Stats key={stat.stat.name} {...stat} />
               ))}
             </ul>
           </div>

@@ -1,4 +1,3 @@
-import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 import styled from "styled-components";
 import SearchBar from "../SearchBar/SearchBar";

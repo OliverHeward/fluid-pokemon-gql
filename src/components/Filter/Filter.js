@@ -148,12 +148,13 @@ const Filter = () => {
 
   let radios = radioArray.map((radio) => {
     return (
-      <label>
+      <label key={radio.id}>
         <input
           key={radio.id}
           type="radio"
           checked={radio.config.checked}
-          onClick={(event) => inputChangedHandler(radio.config.type, radio.id)}
+          onChange={() => inputChangedHandler(radio.config.type, radio.id)}
+          onClick={() => inputChangedHandler(radio.config.type, radio.id)}
         />
         {radio.config.type}
       </label>

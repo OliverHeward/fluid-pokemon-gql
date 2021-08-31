@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getFilters } from "../../app/pokemonSlice";
 import PokeCard from "../PokeCard/PokeCard";
 import Rems from "../../styles/mixins/Rems";
@@ -112,7 +112,6 @@ const PokemonWrapper = styled.div`
 `;
 
 const PokemonList = ({ allPokemon }) => {
-  const dispatch = useDispatch();
   const { payload } = useSelector(getFilters);
   const [number, setNumber] = useState(6);
 
@@ -170,13 +169,14 @@ const PokemonList = ({ allPokemon }) => {
       : chunkArray(resolvedNests.slice(0, number), 3);
 
     return arrayChunks.map((chunk) => {
+      console.log(chunk);
       return (
         <PokemonWrapper>
           <Pokedex className="pokedex" />
           <div className="container">
             <Pokeball className="pokeball" />
             {chunk.map((pokemon) => (
-              <PokeCard {...pokemon} />
+              <PokeCard key={pokemon.name} {...pokemon} />
             ))}
             <Pokeball className="pokeball" />
           </div>
