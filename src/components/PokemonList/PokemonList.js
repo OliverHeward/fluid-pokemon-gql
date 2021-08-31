@@ -5,7 +5,7 @@ import { getFilters } from "../../app/pokemonSlice";
 import PokeCard from "../PokeCard/PokeCard";
 import Rems from "../../styles/mixins/Rems";
 
-import Pokedex from "../../assets/svgs/pokedex.svg";
+import Pokedex from "../../assets/svgs/Pokedex.svg";
 import Pokeball from "../../assets/svgs/Pokeball.svg";
 
 const PokemonListStyled = styled.div`
