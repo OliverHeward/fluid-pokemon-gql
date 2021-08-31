@@ -9,8 +9,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `pokemon-images`,
-        path: `${__dirname}/src/assets/pokemon/`,
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
       },
     },
     {
