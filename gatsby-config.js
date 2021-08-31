@@ -6,7 +6,12 @@ module.exports = {
   plugins: [
     "gatsby-plugin-styled-components",
     "gatsby-plugin-react-helmet",
-    `gatsby-source-filesystem`,
+    {
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
     {
       resolve: "gatsby-plugin-manifest",
       options: {
