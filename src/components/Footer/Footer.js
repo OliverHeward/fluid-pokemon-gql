@@ -30,7 +30,7 @@ const Footer = () => {
   return (
     <FooterStyled>
       <div className="footer-grid">
-        {/* <Pokemon /> */}
+        {/* <Pokemon /> - Did not include this, too many errors in SVG for HTML > JSX */}
         <hr />
         <Fluid />
       </div>

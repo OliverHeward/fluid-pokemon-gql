@@ -116,8 +116,8 @@ const Pokemon = ({ data }) => {
 
   return (
     <PokemonStyled type={pokemon.types[0].type.name}>
-      <div class="header">
-        <h1 className="capitilize">{pokemon.name}</h1>
+      <div className="header">
+        <h1 className="capitilize">{sanitizeString(pokemon.name)}</h1>
       </div>
       <div className="upper-pokemon">
         <GatsbyImage
@@ -129,13 +129,17 @@ const Pokemon = ({ data }) => {
           <h3>
             Type:{" "}
             {pokemon.types.map((type) => (
-              <span className="capitilize">{type.type.name} | </span>
+              <span key={type.type.name}>
+                {sanitizeString(type.type.name)} |{" "}
+              </span>
             ))}
           </h3>
           <h3>
             Abilities:{" "}
             {pokemon.abilities.map((ability) => (
-              <span className="capitilize">{sanitizeString(ability.ability.name)} | </span>
+              <span key={ability.ability.name}>
+                {sanitizeSentenceCase(ability.ability.name)} |{" "}
+              </span>
             ))}
           </h3>
 
@@ -172,8 +176,8 @@ const Pokemon = ({ data }) => {
           <h4>Games {sanitizeSentenceCase(pokemon.name)} features in:</h4>
           <ul>
             {pokemon.game_indices.map((game) => (
-              <li className="capitilize">
-                {game.version.name.replace(/-/g, " ")}
+              <li key={game.version.name}>
+                {sanitizeSentenceCase(game.version.name)}
               </li>
             ))}
           </ul>
