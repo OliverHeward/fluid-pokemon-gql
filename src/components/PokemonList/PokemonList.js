@@ -169,7 +169,6 @@ const PokemonList = ({ allPokemon }) => {
       : chunkArray(resolvedNests.slice(0, number), 3);
 
     return arrayChunks.map((chunk) => {
-      console.log(chunk);
       return (
         <PokemonWrapper>
           <Pokedex className="pokedex" />
@@ -195,7 +194,6 @@ const PokemonList = ({ allPokemon }) => {
       <div className="button-container">
         <button
           className={`btn cta`}
-          role="button"
           onClick={() => fetchMorePokemon()}
         >
           Load More
