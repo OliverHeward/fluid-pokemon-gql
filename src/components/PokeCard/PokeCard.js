@@ -2,20 +2,23 @@ import { Link } from "gatsby";
 import { getImage, GatsbyImage } from "gatsby-plugin-image";
 import React from "react";
 import styled from "styled-components";
+import { sanitizeString } from "../../shared/utility";
 import Rems from "../../styles/mixins/Rems";
 import Stats from "./Stats";
 
 const PokeCardStyled = styled.div`
-  a {
-    color: #000;
-    text-decoration: none;
-  }
   max-width: 380px;
   margin: 150px auto 0;
   width: 100%;
   z-index: 10;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3));
   transition: all 0.3s ease-in-out;
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
   &:hover {
     transform: translateY(-5px) scale(1.01);
   }
@@ -31,7 +34,7 @@ const PokeCardStyled = styled.div`
     justify-content: center;
 
     .gatsby-image-wrapper {
-      position: absolute;
+      position: absolute !important;
       bottom: 0;
     }
   }
@@ -95,7 +98,7 @@ const PokeCard = (props) => {
               <h3 className="bold">Abilities </h3>
               <div className="looped">
                 {props.abilities.map((ability) => (
-                  <span key={ability} className="capitilize">{ability} | </span>
+                  <span key={ability} className="capitilize">{sanitizeString(ability)} | </span>
                 ))}
               </div>
             </div>

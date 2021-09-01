@@ -1,3 +1,4 @@
+import { Link } from "gatsby";
 import React from "react";
 import styled from "styled-components";
 import SearchBar from "../SearchBar/SearchBar";
@@ -20,6 +21,11 @@ const HeaderStyled = styled.header`
     margin: 0;
   }
 
+  a {
+    color: var(--black);
+    text-decoration: none;
+  }
+
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
@@ -35,9 +41,11 @@ const Header = () => {
   return (
     <HeaderStyled>
       <div className="title-intro">
-        <h1>
-          Welcome <br /> to the <br /> <span className="bold">Pokedex.</span>
-        </h1>
+        <Link to={'/'}>
+          <h1>
+            Welcome <br /> to the <br /> <span className="bold">Pokedex.</span>
+          </h1>
+        </Link>
       </div>
       <div className="copy-intro">
         <p className="lighter">

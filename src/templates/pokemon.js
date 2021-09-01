@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import styled from "styled-components";
 import Stats from "../components/PokeCard/Stats";
+import { sanitizeSentenceCase, sanitizeString } from "../shared/utility";
 
 const colors = {
   normal: "#A8A77A",
@@ -134,7 +135,7 @@ const Pokemon = ({ data }) => {
           <h3>
             Abilities:{" "}
             {pokemon.abilities.map((ability) => (
-              <span className="capitilize">{ability.ability.name} | </span>
+              <span className="capitilize">{sanitizeString(ability.ability.name)} | </span>
             ))}
           </h3>
 
@@ -157,7 +158,7 @@ const Pokemon = ({ data }) => {
 
       <div className="lower-pokemon">
         <div className="moves">
-          <h4>Moves {pokemon.name} has:</h4>
+          <h4>Moves {sanitizeSentenceCase(pokemon.name)} has:</h4>
           <ul>
             {pokemon.moves.map((move) => (
               <li className="capitilize">
@@ -168,7 +169,7 @@ const Pokemon = ({ data }) => {
         </div>
 
         <div className="games">
-          <h4>Games {pokemon.name} features in:</h4>
+          <h4>Games {sanitizeSentenceCase(pokemon.name)} features in:</h4>
           <ul>
             {pokemon.game_indices.map((game) => (
               <li className="capitilize">

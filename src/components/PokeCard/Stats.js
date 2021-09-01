@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { sanitizeSentenceCase } from "../../shared/utility";
 
 const StatsStyled = styled.li`
   padding: 10px 0;
@@ -11,9 +12,6 @@ const StatsStyled = styled.li`
   .range {
     position: relative;
     overflow: hidden;
-  }
-  .stat-type {
-    text-transform: capitalize;
   }
   .stat-range {
     width: 100%;
@@ -50,7 +48,7 @@ const StatsStyled = styled.li`
 const Stats = ({ base_stat, stat }) => {
   return (
     <StatsStyled>
-      <span className="stat-type">{stat.name}</span>
+      <span className="stat-type">{sanitizeSentenceCase(stat.name)}</span>
       <div className="range">
         <span className="stat-range"></span>
         <span
